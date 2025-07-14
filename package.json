@@ -1,0 +1,35 @@
+{
+  "name": "ts-module-isolation",
+  "version": "1.0.0",
+  "description": "TypeScript version of OrderOrder - prevents jumbling of module prefixes by analyzing dependencies",
+  "main": "dist/index.js",
+  "bin": {
+    "ts-module-isolation": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/cli.ts",
+    "lint": "eslint src/**/*.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "typescript",
+    "module",
+    "dependencies",
+    "analysis",
+    "graph"
+  ],
+  "author": "TypeScript port of fumieval/OrderOrder",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "commander": "^11.0.0"
+  }
+}
