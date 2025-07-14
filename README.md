@@ -33,7 +33,10 @@ npm run build
 ### CLI
 
 ```bash
-# Analyze source directories
+# Analyze current directory (default)
+npx ts-module-isolation
+
+# Analyze specific directories
 npx ts-module-isolation src/
 
 # Multiple directories

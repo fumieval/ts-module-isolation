@@ -10,12 +10,16 @@ program
   .name('orderorder')
   .description('Analyze TypeScript/JavaScript module dependencies to prevent jumbling of module prefixes')
   .version('1.0.0')
-  .argument('<directories...>', 'Source directories to analyze')
+  .argument('[directories...]', 'Source directories to analyze (defaults to current directory)')
   .option('-o, --output <file>', 'Write report to file instead of stdout')
   .option('--dot <file>', 'Generate DOT graph file for visualization')
   .option('--json', 'Output results in JSON format')
   .option('--verbose', 'Show detailed analysis information')
   .action((directories: string[], options) => {
+    // Default to current directory if no directories provided
+    if (!directories || directories.length === 0) {
+      directories = ['.'];
+    }
     try {
       const orderorder = new OrderOrder();
       

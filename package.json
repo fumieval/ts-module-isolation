@@ -1,6 +1,6 @@
 {
   "name": "ts-module-isolation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript version of OrderOrder - prevents jumbling of module prefixes by analyzing dependencies",
   "main": "dist/index.js",
   "bin": {
