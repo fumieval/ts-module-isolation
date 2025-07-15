@@ -1,17 +1,21 @@
 # ts-module-isolation
 
-A TypeScript implementation of [fumieval/OrderOrder](https://github.com/fumieval/OrderOrder) for analyzing module dependencies and preventing jumbling of directories.
+A TypeScript implementation of [fumieval/OrderOrder](https://github.com/fumieval/OrderOrder) for analysing module dependencies and preventing jumbling of directories.
+
+## TL;DR
+
+Try running `npx ts-module-isolation` in your project directory and you'll see what this is about.
 
 ## Overview
 
-ts-module-isolation analyzes TypeScript/JavaScript codebases to ensure directories form a directed acyclic graph (DAG). It helps maintain clean, logical module hierarchies by detecting circular dependencies and violations of proper module organization.
+ts-module-isolation analyses TypeScript/JavaScript codebases to ensure directory dependencies form a directed acyclic graph (DAG). When a module in one directory imports from another directory, it can be thought of as a dependency relationship between those directories. Aligning these dependencies helps maintain clean, logical module hierarchies by detecting circular dependencies.
 
 ## Features
 
-- **Dependency Analysis**: Analyzes TypeScript/JavaScript imports to build module dependency graphs
+- **Dependency Analysis**: Analyses TypeScript/JavaScript imports to build module dependency graphs
 - **Circular Dependency Detection**: Identifies feedback arcs that create cycles in module dependencies
-- **Multiple Output Formats**: Supports text reports, JSON output, and DOT graph visualization
-- **Detailed Reporting**: Provides actionable insights and recommendations for code organization
+- **Multiple Output Formats**: Supports text reports, JSON output, and Dot graph visualization
+- **Detailed Reporting**: Provides actionable insights and recommendations for code organisation
 
 ## Installation
 
@@ -33,10 +37,10 @@ npm run build
 ### CLI
 
 ```bash
-# Analyze current directory (default)
+# Analyse current directory (default)
 npx ts-module-isolation
 
-# Analyze specific directories
+# Analyse specific directories
 npx ts-module-isolation src/
 
 # Multiple directories
@@ -45,8 +49,8 @@ npx ts-module-isolation src/ lib/
 # Output to file
 npx ts-module-isolation src/ -o report.txt
 
-# Generate DOT graph for visualization
-npx ts-module-isolation src/ --dot graph.dot
+# Generate Dot graph to stdout
+npx ts-module-isolation src/ --dot
 
 # JSON output
 npx ts-module-isolation src/ --json
@@ -73,8 +77,8 @@ npx ts-module-isolation src/ --exclude "node_modules/**" --exclude "dist/**"
 ts-module-isolation Analysis Report
 ========================
 
-Total modules analyzed: 25
-Total imports analyzed: 45
+Total modules analysed: 25
+Total imports analysed: 45
 Directories found: 5
 Dependency violations found: 2
 Feedback arcs detected: 1
