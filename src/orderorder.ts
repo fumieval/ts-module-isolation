@@ -12,8 +12,8 @@ export class OrderOrder {
     this.analyzer = new GraphAnalyzer();
   }
 
-  analyze(directories: string[]): AnalysisResult {
-    const allModules = directories.flatMap(dir => this.parser.parseDirectory(dir));
+  analyze(directories: string[], excludePatterns: string[] = []): AnalysisResult {
+    const allModules = directories.flatMap(dir => this.parser.parseDirectory(dir, excludePatterns));
     
     const graph = this.analyzer.buildGraph(allModules);
     const feedbackArcs = this.analyzer.findFeedbackArcs(graph);

@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { join, extname, relative, dirname } from 'path';
+import { minimatch } from 'minimatch';
 import { ModuleDependency, ModuleInfo } from './types';
 import { extractModulePrefix } from './utils';
 
@@ -9,22 +10,28 @@ export class ModuleParser {
   private readonly requireRegex = /(?:const|let|var)\s+.*?=\s*require\(['"](.*?)['"]?\)/g;
   private readonly dynamicImportRegex = /import\(['"](.*?)['"]?\)/g;
 
-  parseDirectory(dirPath: string): ModuleInfo[] {
+  parseDirectory(dirPath: string, excludePatterns: string[] = []): ModuleInfo[] {
     const modules: ModuleInfo[] = [];
-    this.walkDirectory(dirPath, dirPath, modules);
+    this.walkDirectory(dirPath, dirPath, modules, excludePatterns);
     return modules;
   }
 
-  private walkDirectory(currentPath: string, basePath: string, modules: ModuleInfo[]): void {
+  private walkDirectory(currentPath: string, basePath: string, modules: ModuleInfo[], excludePatterns: string[]): void {
     const entries = readdirSync(currentPath);
     
     for (const entry of entries) {
       const fullPath = join(currentPath, entry);
       const stat = statSync(fullPath);
+      const relativePath = relative(basePath, fullPath);
+      
+      // Check if this path should be excluded
+      if (this.isExcluded(relativePath, excludePatterns)) {
+        continue;
+      }
       
       if (stat.isDirectory()) {
         if (entry !== 'node_modules' && !entry.startsWith('.')) {
-          this.walkDirectory(fullPath, basePath, modules);
+          this.walkDirectory(fullPath, basePath, modules, excludePatterns);
         }
       } else if (this.extensions.includes(extname(entry))) {
         const moduleInfo = this.parseFile(fullPath, basePath);
@@ -33,6 +40,10 @@ export class ModuleParser {
         }
       }
     }
+  }
+
+  private isExcluded(relativePath: string, excludePatterns: string[]): boolean {
+    return excludePatterns.some(pattern => minimatch(relativePath, pattern));
   }
 
   private parseFile(filePath: string, basePath: string): ModuleInfo | null {

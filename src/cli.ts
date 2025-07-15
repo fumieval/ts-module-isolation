@@ -15,6 +15,9 @@ program
   .option('--dot <file>', 'Generate DOT graph file for visualization')
   .option('--json', 'Output results in JSON format')
   .option('--verbose', 'Show detailed analysis information')
+  .option('--exclude <pattern>', 'Exclude directories matching the glob pattern (can be specified multiple times)', (value: string, previous: string[]) => {
+    return previous ? [...previous, value] : [value];
+  }, [] as string[])
   .action((directories: string[], options) => {
     // Default to current directory if no directories provided
     if (!directories || directories.length === 0) {
@@ -25,9 +28,12 @@ program
       
       if (options.verbose) {
         console.log(`Analyzing directories: ${directories.join(', ')}`);
+        if (options.exclude.length > 0) {
+          console.log(`Excluding patterns: ${options.exclude.join(', ')}`);
+        }
       }
       
-      const result = orderorder.analyze(directories);
+      const result = orderorder.analyze(directories, options.exclude);
       
       if (options.json) {
         const totalImports = Array.from(result.graph.modules.values())

@@ -53,6 +53,12 @@ npx ts-module-isolation src/ --json
 
 # Verbose mode
 npx ts-module-isolation src/ --verbose
+
+# Exclude directories matching patterns
+npx ts-module-isolation --exclude "test/**" --exclude "**/*.spec.ts"
+
+# Multiple exclude patterns
+npx ts-module-isolation src/ --exclude "node_modules/**" --exclude "dist/**"
 ```
 
 ## What it Detects
@@ -123,6 +129,7 @@ The tool can be configured through command-line options:
 - `--json`: Output results in JSON format
 - `--dot`: Generate DOT graph for visualization
 - `--verbose`: Enable verbose logging
+- `--exclude <pattern>`: Exclude directories matching the glob pattern (can be specified multiple times)
 
 ## Exit Codes
 
