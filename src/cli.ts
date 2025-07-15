@@ -12,7 +12,7 @@ program
   .version('1.0.0')
   .argument('[directories...]', 'Source directories to analyze (defaults to current directory)')
   .option('-o, --output <file>', 'Write report to file instead of stdout')
-  .option('--dot <file>', 'Generate DOT graph file for visualization')
+  .option('--dot', 'Generate DOT graph output to stdout')
   .option('--json', 'Output results in JSON format')
   .option('--verbose', 'Show detailed analysis information')
   .option('--exclude <pattern>', 'Exclude directories matching the glob pattern (can be specified multiple times)', (value: string, previous: string[]) => {
@@ -78,9 +78,8 @@ program
       
       if (options.dot) {
         const dotGraph = orderorder.generateDotGraph(result.graph, result.feedbackArcs);
-        writeFileSync(options.dot, dotGraph);
-        console.log(`DOT graph written to ${options.dot}`);
-        console.log('Generate visualization with: dot -Tpng output.dot -o graph.png');
+        console.log(dotGraph);
+        return;
       }
       
       const hasViolations = result.violations.length > 0 || result.feedbackArcs.length > 0;

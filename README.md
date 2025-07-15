@@ -114,12 +114,12 @@ ts-module-isolation enforces the principle that if a module in directory `ui/com
 - `globals.ts` (in root) → prefix: `globals` (individual file)
 - `index.ts` (in root) → prefix: `index` (individual file)
 
-## Visualization
+## Visualisation
 
-Generate a DOT graph for visualization:
+Generate a DOT graph for visualisation:
 
 ```bash
-npx ts-module-isolation src/ --dot dependencies.dot
+npx ts-module-isolation src/ --dot > dependencies.dot
 dot -Tpng dependencies.dot -o graph.png
 ```
 
@@ -131,7 +131,7 @@ The tool can be configured through command-line options:
 
 - `--output, -o`: Output results to a file instead of stdout
 - `--json`: Output results in JSON format
-- `--dot`: Generate DOT graph for visualization
+- `--dot`: Export dependency graph in the Dot format to stdout
 - `--verbose`: Enable verbose logging
 - `--exclude <pattern>`: Exclude directories matching the glob pattern (can be specified multiple times)
 
